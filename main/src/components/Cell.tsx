@@ -1,24 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState, memo } from "react";
 
 interface CellProps {
     children: React.ReactNode; // Adjusted to use React.ReactNode for children
     size:number
+    updateCellState: any
+    id:number[]
+    alive:number
   }
 
-function Cell({children, size:cellSize}:CellProps) {
-  const [state, setState] = useState(false);
+const Cell: React.FC<CellProps> = memo(({children, size:cellSize ,updateCellState, id, alive}) => {
 
-  const clickHandle = () => {
-    setState(!state);
-  }
+  useEffect(() => {
+    console.log(`Child (${id}) rendered`);
+  });
 
   const cellStyle = {
     width: `${cellSize}px`,
     height: `${cellSize}px`,
   };
   return (
-    <div onClick={clickHandle} style={cellStyle} className={`${state? "bg-slate-400":"bg-black" }`}>{children}</div>
+    <div onClick={()=>updateCellState(id)} style={cellStyle} className={`${alive? "bg-slate-400":"bg-black" }`}>{children}</div>
   )
-}
+});
 
 export default Cell

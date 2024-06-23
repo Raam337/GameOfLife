@@ -1,6 +1,5 @@
 #root {
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   color:forestgreen;
   min-height: 100vh;
@@ -11,5 +10,4 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr); /* initial */
   grid-template-rows: repeat(1, 1fr); /* initial */
-  gap: 1px;
 }
