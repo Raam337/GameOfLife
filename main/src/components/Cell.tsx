@@ -6,21 +6,26 @@ interface CellProps {
     updateCellState: any
     id:number[]
     alive:number
+    hovered:boolean
   }
 
-const Cell: React.FC<CellProps> = memo(({children, size:cellSize ,updateCellState, id, alive}) => {
-
-  useEffect(() => {
-    console.log(`Child (${id}) rendered`);
-  });
+const Cell: React.FC<CellProps> = memo(({children, size:cellSize ,updateCellState, id, alive,hovered}) => {
 
   const cellStyle = {
     width: `${cellSize}px`,
     height: `${cellSize}px`,
   };
   return (
-    <div onClick={()=>updateCellState(id)} style={cellStyle} className={`${alive? "bg-slate-400":"bg-black" }`}>{children}</div>
-  )
+    <div
+      onMouseEnter={() => addHover(id)}
+      onMouseLeave={() => removeHover(id)}
+      onClick={() => updateCellState(id)}
+      style={cellStyle}
+      className={`${hovered? "bg-red-500" : alive ? "bg-slate-400" : "bg-black"}`}
+    >
+      {children}
+    </div>
+  );
 });
 
 export default Cell
