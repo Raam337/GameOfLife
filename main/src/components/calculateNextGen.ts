@@ -17,8 +17,7 @@ export default function calculateNextGen(currentGen:number[][]):number[][]{
             if(numCellsArround >= 4) nextGen[y][x]=0
         }
     }
-    console.log("nextgen:")
-    console.log(nextGen)
+
     return nextGen
 
 }
