@@ -3,14 +3,50 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import calculateNextGen from "../calculateNextGen";
 import includesArray from "../includesArray"
 
-type Props = {}
+type Props = {
+  pattern:string
+}
 
-function GameGrid({}: Props) {
+const shapes = {
+  "Pulsar":[
+    [0, 0], [1, 0], [2, 0], [6, 0], [7, 0], [8, 0],
+    [-2, 2], [3, 2], [5, 2], [10, 2],
+    [-2, 3], [3, 3], [5, 3], [10, 3],
+    [-2, 4], [3, 4], [5, 4], [10, 4],
+    [0, 5], [1, 5], [2, 5], [6, 5], [7, 5], [8, 5],
+    [0, 7], [1, 7], [2, 7], [6, 7], [7, 7], [8, 7],
+    [-2, 8], [3, 8], [5, 8], [10, 8],
+    [-2, 9], [3, 9], [5, 9], [10, 9],
+    [-2, 10], [3, 10], [5, 10], [10, 10],
+    [0, 12], [1, 12], [2, 12], [6, 12], [7, 12], [8, 12]
+  ],
+  "Beacon":[
+    [0, 0], [1, 0],
+    [0, 1], [1, 1],
+    [2, 2], [3, 2],
+    [2, 3], [3, 3]
+  ],
+  "Pentad": [
+    [0, 0],
+    [0, 1],
+    [-1, 2], [1, 2],
+    [0, 3],
+    [0, 4],
+    [0, 5],
+    [0, 6],
+    [-1, 7], [1, 7],
+    [0, 8],
+    [0, 9]
+  ],
+  "": []
+}
+
+function GameGrid({pattern}: Props) {
   //Grid dimension and cell size
   console.log("GameGrid rendered");
   const DIM = {
-    x: 50,
-    y: 50,
+    x: 200,
+    y: 200,
   }; //x by y
   const [cellSize, setCellSize] = useState(
     Math.floor(Math.min(window.innerHeight / DIM.y, window.innerWidth / DIM.x))
@@ -61,13 +97,22 @@ function GameGrid({}: Props) {
   const hoveredRef = useRef(hovered);
   useEffect(()=>{
     hoveredRef.current = hovered
-  },[hovered])
+  },[hovered]);
+
+  const patternRef = useRef(pattern);
+  useEffect(()=>{
+    patternRef.current = pattern
+  },[pattern]);
+
 
   const hoverIn = useCallback((id: string) => {
+    console.log(pattern)
     setHovered((oldHovered) => {
       const [x, y] = id.split(";").map(Number);
-      const newHovered = [...oldHovered, id, `${x + 2};${y + 2}`];
-      console.log(newHovered);
+      const newHovered = [...oldHovered,id];
+      shapes[patternRef.current].map( (item)=>{
+        newHovered.push(`${x+item[0]};${y+item[1]}`)
+      } )
       return newHovered;
     });
   }, []);
