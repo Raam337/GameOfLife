@@ -14,41 +14,41 @@ interface CellProps {
 const Cell: React.FC<CellProps> = memo(
   ({ children, size: cellSize, updateCellState, id, alive, hovered, addHover, removeHover }) => {
 
-    useEffect(() => {
-      console.log('Cell component mounted');
-    }, []);
+    // useEffect(() => {
+    //   console.log('Cell component mounted');
+    // }, []);
 
-    useEffect(() => {
-      console.log('children prop changed');
-    }, [children]);
+    // useEffect(() => {
+    //   console.log('children prop changed');
+    // }, [children]);
 
-    useEffect(() => {
-      console.log('size prop changed');
-    }, [cellSize]);
+    // useEffect(() => {
+    //   console.log('size prop changed');
+    // }, [cellSize]);
 
-    useEffect(() => {
-      console.log('updateCellState prop changed');
-    }, [updateCellState]);
+    // useEffect(() => {
+    //   console.log('updateCellState prop changed');
+    // }, [updateCellState]);
 
-    useEffect(() => {
-      console.log('id prop changed');
-    }, [id]);
+    // useEffect(() => {
+    //   console.log('id prop changed');
+    // }, [id]);
 
-    useEffect(() => {
-      console.log('alive prop changed');
-    }, [alive]);
+    // useEffect(() => {
+    //   console.log('alive prop changed');
+    // }, [alive]);
 
-    useEffect(() => {
-      console.log('hovered prop changed');
-    }, [hovered]);
+    // useEffect(() => {
+    //   console.log('hovered prop changed');
+    // }, [hovered]);
 
-    useEffect(() => {
-      console.log('addHover prop changed');
-    }, [addHover]);
+    // useEffect(() => {
+    //   console.log('addHover prop changed');
+    // }, [addHover]);
 
-    useEffect(() => {
-      console.log('removeHover prop changed');
-    }, [removeHover]);
+    // useEffect(() => {
+    //   console.log('removeHover prop changed');
+    // }, [removeHover]);
 
 
 
@@ -63,7 +63,7 @@ const Cell: React.FC<CellProps> = memo(
       width: `${cellSize}px`,
       height: `${cellSize}px`,
     };
-    //console.log("rerender " + id)
+    console.log("rerender " + id)
     return (
       <div
         onMouseEnter={() => addHover(id)}
