@@ -45,8 +45,8 @@ function GameGrid({pattern}: Props) {
   //Grid dimension and cell size
   console.log("GameGrid rendered");
   const DIM = {
-    x: 200,
-    y: 200,
+    x: 50,
+    y: 50,
   }; //x by y
   const [cellSize, setCellSize] = useState(
     Math.floor(Math.min(window.innerHeight / DIM.y, window.innerWidth / DIM.x))
@@ -82,11 +82,15 @@ function GameGrid({pattern}: Props) {
 
   // OnClick change state of a cell
   const handleClick = useCallback((cellID: string) => {
+    
     setCurrentGen((currentGen) => {
       let tempArr: number[][] = structuredClone(currentGen);
       hoveredRef.current.map((item: string) => {
-        let [x, y] = item.split(";");
-        tempArr[y][x] = +!currentGen[y][x];
+        debugger;
+        let [x, y] = item.split(";").map(Number);
+        if ( (x <= DIM.x - 1) && (y <= DIM.y-1)){
+          tempArr[y][x] = +!currentGen[y][x];
+        }
       });
       return tempArr;
     });

@@ -14,56 +14,13 @@ interface CellProps {
 const Cell: React.FC<CellProps> = memo(
   ({ children, size: cellSize, updateCellState, id, alive, hovered, addHover, removeHover }) => {
 
-    // useEffect(() => {
-    //   console.log('Cell component mounted');
-    // }, []);
-
-    // useEffect(() => {
-    //   console.log('children prop changed');
-    // }, [children]);
-
-    // useEffect(() => {
-    //   console.log('size prop changed');
-    // }, [cellSize]);
-
-    // useEffect(() => {
-    //   console.log('updateCellState prop changed');
-    // }, [updateCellState]);
-
-    // useEffect(() => {
-    //   console.log('id prop changed');
-    // }, [id]);
-
-    // useEffect(() => {
-    //   console.log('alive prop changed');
-    // }, [alive]);
-
-    // useEffect(() => {
-    //   console.log('hovered prop changed');
-    // }, [hovered]);
-
-    // useEffect(() => {
-    //   console.log('addHover prop changed');
-    // }, [addHover]);
-
-    // useEffect(() => {
-    //   console.log('removeHover prop changed');
-    // }, [removeHover]);
-
-
-
-
-
-
-
-
-
-
     const cellStyle = {
       width: `${cellSize}px`,
       height: `${cellSize}px`,
     };
+
     console.log("rerender " + id)
+    
     return (
       <div
         onMouseEnter={() => addHover(id)}
@@ -72,9 +29,10 @@ const Cell: React.FC<CellProps> = memo(
         style={cellStyle}
         className={`${
           hovered ? "bg-red-500" : alive ? "bg-slate-400" : "bg-black"
-        }`}
+        } text-[8px]`}
       >
         {children}
+
       </div>
     );
   }
