@@ -18,8 +18,6 @@ const Cell: React.FC<CellProps> = memo(
       width: `${cellSize}px`,
       height: `${cellSize}px`,
     };
-
-    console.log("rerender " + id)
     
     return (
       <div

@@ -10,8 +10,8 @@ export default function GameWindow({}: Props) {
   const [pattern,setPattern] = useState("")
   const [running, setRunning] = useState(false)
   const [speed,setSpeed] = useState(50)
-  const MIN_DELAY = 50
-  const MAX_DELAY = 1000
+  const MIN_DELAY = 10
+  const MAX_DELAY = 200
   const interval = useRef<number | null>(null)
   const gridRef = useRef()
 
@@ -29,7 +29,7 @@ export default function GameWindow({}: Props) {
   }
 
   useEffect( ()=>{
-    let timeDelay = MAX_DELAY - speed*10 + MIN_DELAY;
+    let timeDelay = MAX_DELAY - speed*MAX_DELAY/100 + MIN_DELAY;
     if(!interval.current && running){
       interval.current = setInterval(() => {
         gridRef.current.renderStep()
@@ -49,6 +49,7 @@ export default function GameWindow({}: Props) {
   function clearGrid(){
     setRunning(false)
     gridRef.current.clearGrid()
+    setPattern("None")
   }
 
   return (
@@ -59,6 +60,7 @@ export default function GameWindow({}: Props) {
           {Object.entries(shapes).map(([shape, value]) => {
             return (
               <ShapeCard
+                key={shape}
                 onClick={() => patternChange(shape)}
                 coordinates={value}
                 name={shape}
@@ -85,7 +87,7 @@ export default function GameWindow({}: Props) {
               step="1"
               value={speed}
             ></input>
-            <label>Delay: {MAX_DELAY - speed*10 + MIN_DELAY} ms</label>
+            <label>Delay: {MAX_DELAY - speed*MAX_DELAY/100 + MIN_DELAY} ms</label>
           </div>
 
           <a onClick={() => clearGrid()} 

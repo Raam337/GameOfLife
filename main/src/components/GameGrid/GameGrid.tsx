@@ -11,7 +11,6 @@ type Props = {
 
 function GameGrid({pattern}: Props, ref) {
   //Grid dimension and cell size
-  console.log("GameGrid rendered");
   const DIM = {
     x: 50,
     y: 50,
@@ -50,7 +49,6 @@ function GameGrid({pattern}: Props, ref) {
       }
     }
     setCurrentGen(tempArray);
-    console.log("grid cleared")
   }
 
   // OnClick change state of a cell
@@ -82,7 +80,6 @@ function GameGrid({pattern}: Props, ref) {
 
 
   const hoverIn = useCallback((id: string) => {
-    console.log(pattern)
     setHovered((oldHovered) => {
       const [x, y] = id.split(";").map(Number);
       const newHovered = [...oldHovered,id];
