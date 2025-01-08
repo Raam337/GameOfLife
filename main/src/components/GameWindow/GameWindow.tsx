@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import GameGrid from "../GameGrid/GameGrid"
-import {shapes} from "../../assets/patternList.js"
+import GameGrid, {GameGridHandle} from "../GameGrid/GameGrid"
+import {shapes} from "../../assets/patternList.ts"
 import ShapeCard from "../ShapeCard/ShapeCard.jsx"
 
 type Props = {}
@@ -12,8 +12,8 @@ export default function GameWindow({}: Props) {
   const [speed,setSpeed] = useState(50)
   const MIN_DELAY = 10
   const MAX_DELAY = 200
-  const interval = useRef<number | null>(null)
-  const gridRef = useRef()
+  const interval = useRef<number | undefined>(undefined)
+  const gridRef = useRef<GameGridHandle | null>(null);
 
   function patternChange(str:string){
     setPattern(str);
@@ -24,23 +24,24 @@ export default function GameWindow({}: Props) {
     setRunning(!running)
   }
 
-  function speedChange(e:Event){
+  function speedChange(e:React.ChangeEvent<HTMLInputElement>){
     setSpeed(parseInt(e.target.value))
   }
 
   useEffect( ()=>{
     let timeDelay = MAX_DELAY - speed*MAX_DELAY/100 + MIN_DELAY;
-    if(!interval.current && running){
+
+    if(!interval.current && running){ //No interval present but is running, create interval
       interval.current = setInterval(() => {
-        gridRef.current.renderStep()
+        gridRef.current!.renderStep()
       }, timeDelay);
-    } else if (!running) {
+    } else if (!running) { //When changed to not running delete interval
       clearInterval(interval.current);
-      interval.current = null
-    } else {
+      interval.current = undefined
+    } else { // Reset interval due to speed change
       clearInterval(interval.current);
       interval.current = setInterval(() => {
-        gridRef.current.renderStep()
+        gridRef.current!.renderStep()
       }, timeDelay);
 
     }
@@ -48,7 +49,7 @@ export default function GameWindow({}: Props) {
 
   function clearGrid(){
     setRunning(false)
-    gridRef.current.clearGrid()
+    gridRef.current!.clearGrid()
     setPattern("None")
   }
 

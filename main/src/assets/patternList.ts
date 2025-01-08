@@ -1,4 +1,4 @@
-export const shapes = {
+export const shapes: Record<string,[number,number][]> = {
     "Pulsar":[
       [0, 0], [1, 0], [2, 0], [6, 0], [7, 0], [8, 0],
       [-2, 2], [3, 2], [5, 2], [10, 2],

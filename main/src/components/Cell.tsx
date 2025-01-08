@@ -1,7 +1,7 @@
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 
 interface CellProps {
-    children: React.ReactNode; // Adjusted to use React.ReactNode for children
+    children?: React.ReactNode; // Adjusted to use React.ReactNode for children
     size:number
     updateCellState: any
     id:string

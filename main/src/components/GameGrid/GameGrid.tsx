@@ -1,15 +1,18 @@
 import Cell from "../Cell"
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import calculateNextGen from "../calculateNextGen";
-import includesArray from "../includesArray"
-import {shapes} from "../../assets/patternList.js"
+import {shapes} from "../../assets/patternList.ts"
 
 type Props = {
   pattern:string
 }
 
+export type GameGridHandle = {
+  renderStep: () => void;
+  clearGrid: () => void;
+};
 
-function GameGrid({pattern}: Props, ref) {
+function GameGrid({pattern}: Props, ref:React.Ref<GameGridHandle>) {
   //Grid dimension and cell size
   const DIM = {
     x: 50,
@@ -33,7 +36,7 @@ function GameGrid({pattern}: Props, ref) {
   }, [window.innerHeight, window.innerWidth]);
 
   //Current gen 2D array-state
-  const [currentGen, setCurrentGen] = useState([]);
+  const [currentGen, setCurrentGen] = useState<number[][]>([]);
 
   //Fill current gen with random
   useEffect(() => {
@@ -52,13 +55,13 @@ function GameGrid({pattern}: Props, ref) {
   }
 
   // OnClick change state of a cell
-  const handleClick = useCallback((cellID: string) => {
+  const handleClick = useCallback(() => {
     
     setCurrentGen((currentGen) => {
       let tempArr: number[][] = structuredClone(currentGen);
       hoveredRef.current.map((item: string) => {
         let [x, y] = item.split(";").map(Number);
-        if ( (x <= DIM.x - 1) && (y <= DIM.y-1)){
+        if ( (x <= DIM.x - 1) && (y <= DIM.y-1) && (x >= 0) && (y >= 0)){
           tempArr[y][x] = +!currentGen[y][x];
         }
       });
@@ -67,7 +70,7 @@ function GameGrid({pattern}: Props, ref) {
   }, []);
 
   //OnHover add to hover array and render all
-  const [hovered, setHovered] = useState([]);
+  const [hovered, setHovered] = useState<string[]>([]);
   const hoveredRef = useRef(hovered);
   useEffect(()=>{
     hoveredRef.current = hovered
@@ -80,9 +83,9 @@ function GameGrid({pattern}: Props, ref) {
 
 
   const hoverIn = useCallback((id: string) => {
-    setHovered((oldHovered) => {
+    setHovered(() => {
       const [x, y] = id.split(";").map(Number);
-      const newHovered = [...oldHovered,id];
+      const newHovered = [id];
       shapes[patternRef.current]?.map( (item)=>{
         newHovered.push(`${x+item[0]};${y+item[1]}`)
       } )
